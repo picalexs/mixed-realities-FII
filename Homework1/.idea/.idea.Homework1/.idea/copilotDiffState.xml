@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/Assets/Scripts/TestScript.cs">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/Assets/Scripts/TestScript.cs" />
+              <option name="originalContent" value="using UnityEngine;&#10;&#10;public class TestScript : MonoBehaviour&#10;{&#10;    private readonly float _interval = 2f;&#10;    private float _timer;&#10;    private Renderer _renderer;&#10;&#10;    private void Awake()&#10;    {&#10;        _renderer = GetComponent&lt;Renderer&gt;();&#10;    }&#10;&#10;    private void Update()&#10;    {&#10;        _timer += Time.deltaTime;&#10;        if (_timer &lt; _interval) return;&#10;        _timer = 0f;&#10;&#10;        if (_renderer != null)&#10;        {&#10;            _renderer.material.color = new Color(Random.value, Random.value, Random.value);&#10;        }&#10;    }&#10;}" />
+              <option name="updatedContent" value="using UnityEngine;&#10;&#10;public class TestScript : MonoBehaviour&#10;{&#10;    private readonly float _interval = 2f;&#10;    private float _timer;&#10;    private Renderer _renderer;&#10;&#10;    private void Awake()&#10;    {&#10;        _renderer = GetComponent&lt;Renderer&gt;();&#10;    }&#10;&#10;    private void Update()&#10;    {&#10;        _timer += Time.deltaTime;&#10;        if (_timer &lt; _interval) return;&#10;        _timer = 0f;&#10;&#10;        if (_renderer != null)&#10;        {&#10;            _renderer.material.color = new Color(Random.value, Random.value, Random.value);&#10;        }&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
