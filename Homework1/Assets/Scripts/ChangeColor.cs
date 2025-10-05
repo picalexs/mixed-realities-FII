@@ -18,9 +18,9 @@ public class ChangeColor : MonoBehaviour
         if (_timer < _interval) return;
         _timer = 0f;
 
-        if (_renderer != null)
+        if (_renderer)
         {
-            Debug.Log("Changing color");
+            Debug.Log("Changing the color");
             _renderer.material.color = new Color(Random.value, Random.value, Random.value);
         }
     }
