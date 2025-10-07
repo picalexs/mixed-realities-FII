@@ -65,5 +65,5 @@
 **/*.pdb.meta
 **/*.mdb.meta
 
-# Ignore Unity package archives (like Vuforia)
+# Ignore Unity package archives
 **/[Pp]ackages/*.tgz
