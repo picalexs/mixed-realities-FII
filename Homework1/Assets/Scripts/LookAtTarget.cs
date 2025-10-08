@@ -18,7 +18,7 @@ public class LookAtTarget : MonoBehaviour
 
     private void RotateTowardsTarget()
     {
-        if (target == null) return;
+        if (!target) return;
 
         Vector3 directionToTarget = target.position - transform.position;
 

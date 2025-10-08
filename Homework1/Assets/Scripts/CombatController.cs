@@ -3,56 +3,107 @@ using System.Collections.Generic;
 
 public class CombatController : MonoBehaviour
 {
-    private ProximityDetector _proximityDetector;
+    [Header("Detection Setup")]
+    [SerializeField] private ProximityDetector detectionRange;
+    [SerializeField] private ProximityDetector attackRange;
+    
     private LookAtTarget _lookAtTarget;
+    private CombatAnimationController _animationController;
+    private RandomLookAround _randomLookAround;
 
-    private HashSet<GameObject> _detectedObjects;
-
-    private void Start()
-    {
-        _detectedObjects = new HashSet<GameObject>();
-    }
+    private readonly HashSet<GameObject> _detectedObjects = new HashSet<GameObject>();
+    private readonly HashSet<GameObject> _attackableObjects = new HashSet<GameObject>();
 
     private void Awake()
     {
-        _proximityDetector = GetComponentInChildren<ProximityDetector>();
-        if (_proximityDetector == null)
+        if (detectionRange == null)
         {
-            Debug.LogError($"CombatController on {name}: ProximityDetector not found in children!", this);
+            Debug.LogError($"CombatController on {name}: Detection Range ProximityDetector not assigned!", this);
         }
-
-        if (GetComponentInParent<Rigidbody>() == null)
+        if (attackRange == null)
         {
-            Debug.LogError($"CombatController on {name}: Rigidbody not found in parent!", this);
+            Debug.LogWarning($"CombatController on {name}: Attack Range ProximityDetector not assigned. Will use detection range for both.", this);
         }
 
         _lookAtTarget = GetComponent<LookAtTarget>();
+        _animationController = GetComponent<CombatAnimationController>();
+        _randomLookAround = GetComponent<RandomLookAround>();
     }
 
     private void OnEnable()
     {
-        if (_proximityDetector == null) return;
-        _proximityDetector.onEnter.AddListener(OnEnterCombat);
-        _proximityDetector.onExit.AddListener(OnExitCombat);
+        if (detectionRange)
+        {
+            detectionRange.onEnter.AddListener(OnTargetDetected);
+            detectionRange.onExit.AddListener(OnTargetLost);
+        }
+
+        if (attackRange)
+        {
+            attackRange.onEnter.AddListener(OnTargetInAttackRange);
+            attackRange.onExit.AddListener(OnTargetLeftAttackRange);
+        }
     }
 
     private void OnDisable()
     {
-        if (_proximityDetector == null) return;
-        _proximityDetector.onEnter.RemoveListener(OnEnterCombat);
-        _proximityDetector.onExit.RemoveListener(OnExitCombat);
+        if (detectionRange)
+        {
+            detectionRange.onEnter.RemoveListener(OnTargetDetected);
+            detectionRange.onExit.RemoveListener(OnTargetLost);
+        }
+
+        if (attackRange)
+        {
+            attackRange.onEnter.RemoveListener(OnTargetInAttackRange);
+            attackRange.onExit.RemoveListener(OnTargetLeftAttackRange);
+        }
     }
 
-    private void OnEnterCombat(GameObject attacker)
+    private void OnTargetDetected(GameObject target)
     {
-        Debug.Log($"Entering Combat with {attacker.transform.parent?.name ?? attacker.name}");
-        _detectedObjects.Add(attacker);
+        Debug.Log($"{name}: Target detected - {target.transform.parent?.name ?? target.name}");
+        _detectedObjects.Add(target);
+        
+        // Disable random looking when we have a target
+        if (_detectedObjects.Count == 1 && _randomLookAround != null)
+        {
+            _randomLookAround.DisableRandomLooking();
+        }
+    }
+    
+    private void OnTargetLost(GameObject target)
+    {
+        Debug.Log($"{name}: Target lost - {target.transform.parent?.name ?? target.name}");
+        _detectedObjects.Remove(target);
+        
+        // Enable random looking when we have no more targets
+        if (_detectedObjects.Count == 0 && _randomLookAround != null)
+        {
+            _randomLookAround.EnableRandomLooking();
+        }
     }
 
-    private void OnExitCombat(GameObject attacker)
+    private void OnTargetInAttackRange(GameObject target)
     {
-        Debug.Log($"Exiting Combat with {attacker.transform.parent?.name ?? attacker.name}");
-        _detectedObjects.Remove(attacker);
+        Debug.Log($"{name}: Target in attack range - {target.transform.parent?.name ?? target.name}");
+        _attackableObjects.Add(target);
+        
+        if (_attackableObjects.Count == 1 && _animationController != null)
+        {
+            _animationController.EnterCombat();
+        }
+    }
+
+    private void OnTargetLeftAttackRange(GameObject target)
+    {
+        Debug.Log($"{name}: Target left attack range - {target.transform.parent?.name ?? target.name}");
+        _attackableObjects.Remove(target);
+        
+        if (_attackableObjects.Count == 0 && _animationController != null)
+        {
+            _animationController.ExitCombat();
+        }
     }
 
     private GameObject GetClosestTarget()
@@ -61,6 +112,8 @@ public class CombatController : MonoBehaviour
         float closestDistance = float.MaxValue;
         foreach (var obj in _detectedObjects)
         {
+            if (!obj) continue;
+            
             float distance = Vector3.Distance(transform.position, obj.transform.position);
             if (distance < closestDistance)
             {
@@ -83,19 +136,18 @@ public class CombatController : MonoBehaviour
 
         GameObject closestTarget = GetClosestTarget();
 
-        if (_lookAtTarget == null) return;
-        if (closestTarget == null)
+        if (!_lookAtTarget) return;
+        if (!closestTarget)
         {
             _lookAtTarget.SetTarget(null);
             return;
         }
 
-        Transform targetTransform = closestTarget.transform.parent != null
+        Transform targetTransform = closestTarget.transform.parent
             ? closestTarget.transform.parent
             : closestTarget.transform;
 
         _lookAtTarget.SetTarget(targetTransform);
         Debug.Log($"[{gameObject.name}] Current Target: {targetTransform.name}");
-        
     }
 }
