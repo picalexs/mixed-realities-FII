@@ -8,6 +8,8 @@ public class Health : MonoBehaviour
     [SerializeField] private float currentHealth = 100f;
     [SerializeField] private bool destroyOnDeath;
     [SerializeField] private float destroyDelay = 2f;
+    [SerializeField] private bool autoRevive = false;
+    [SerializeField] private float reviveDelay = 5f;
     
     [Header("Events")]
     public UnityEvent<float, float> onHealthChanged = new UnityEvent<float, float>();
@@ -20,6 +22,7 @@ public class Health : MonoBehaviour
     public float CurrentHealth => currentHealth;
     public float MaxHealth => maxHealth;
     public float HealthPercentage => maxHealth > 0 ? currentHealth / maxHealth : 0f;
+    private float _reviveTimer;
 
     private void Awake()
     {
@@ -29,6 +32,17 @@ public class Health : MonoBehaviour
         if (IsDead)
         {
             Debug.LogWarning($"Health on {name}: Started dead (health <= 0)", this);
+        }
+    }
+
+    private void Update()
+    {
+        if (!IsDead || !autoRevive) return;
+
+        _reviveTimer -= Time.deltaTime;
+        if (_reviveTimer <= 0f)
+        {
+            Revive();
         }
     }
 
@@ -104,6 +118,12 @@ public class Health : MonoBehaviour
     private void Die()
     {
         IsDead = true;
+        
+        if (autoRevive)
+        {
+            _reviveTimer = reviveDelay;
+        }
+        
         onDeath.Invoke();
 
         if (destroyOnDeath)

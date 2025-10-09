@@ -10,6 +10,7 @@ public class CombatDamage : MonoBehaviour
     private Health _targetHealth;
     private Transform _currentTarget;
     private bool _isInCombat;
+    private bool _isDead;
 
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class CombatDamage : MonoBehaviour
         if (_health)
         {
             _health.onDeath.AddListener(OnSelfDeath);
+            _health.onRevived.AddListener(OnSelfRevived);
         }
     }
 
@@ -51,6 +53,7 @@ public class CombatDamage : MonoBehaviour
         if (_health)
         {
             _health.onDeath.RemoveListener(OnSelfDeath);
+            _health.onRevived.RemoveListener(OnSelfRevived);
         }
         
         UnsubscribeFromTargetDeath();
@@ -95,8 +98,13 @@ public class CombatDamage : MonoBehaviour
 
     private void OnSelfDeath()
     {
+        _isDead = true;
         _isInCombat = false;
-        enabled = false;
+    }
+
+    private void OnSelfRevived()
+    {
+        _isDead = false;
     }
 
     private void OnCombatStarted()
@@ -111,7 +119,7 @@ public class CombatDamage : MonoBehaviour
 
     public void OnAttackHit()
     {
-        if (!_isInCombat || !_targetHealth || _targetHealth.IsDead) return;
+        if (_isDead || !_isInCombat || !_targetHealth || _targetHealth.IsDead) return;
         
         _targetHealth.TakeDamage(damageAmount);
     }
