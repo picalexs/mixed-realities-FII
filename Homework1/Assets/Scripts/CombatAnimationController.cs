@@ -4,7 +4,6 @@ public class CombatAnimationController : MonoBehaviour
 {
     private static readonly int InCombat = Animator.StringToHash("IsInCombat");
     private Animator _animator;
-    
     private CombatController _combatController;
 
     private void Awake()

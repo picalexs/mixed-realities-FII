@@ -4,15 +4,13 @@ using System.Collections.Generic;
 
 public class CombatController : MonoBehaviour
 {
-    [Header("Detection Setup")]
     [SerializeField] private ProximityDetector detectionRange;
     [SerializeField] private ProximityDetector attackRange;
     
-    [Header("Events")]
-    public UnityEvent<Transform> onTargetAcquired = new UnityEvent<Transform>();
-    public UnityEvent onTargetLost = new UnityEvent();
-    public UnityEvent onCombatStarted = new UnityEvent();
-    public UnityEvent onCombatEnded = new UnityEvent();
+    [HideInInspector] public UnityEvent<Transform> onTargetAcquired = new UnityEvent<Transform>();
+    [HideInInspector] public UnityEvent onTargetLost = new UnityEvent();
+    [HideInInspector] public UnityEvent onCombatStarted = new UnityEvent();
+    [HideInInspector] public UnityEvent onCombatEnded = new UnityEvent();
 
     private readonly HashSet<GameObject> _detectedObjects = new HashSet<GameObject>();
     private readonly HashSet<GameObject> _attackableObjects = new HashSet<GameObject>();
@@ -42,6 +40,8 @@ public class CombatController : MonoBehaviour
             attackRange.onEnter.AddListener(OnTargetInAttackRange);
             attackRange.onExit.AddListener(OnTargetLeftAttackRange);
         }
+        
+        CharacterEvents.OnCharacterDied += OnAnyCharacterDied;
     }
 
     private void OnDisable()
@@ -56,6 +56,19 @@ public class CombatController : MonoBehaviour
         {
             attackRange.onEnter.RemoveListener(OnTargetInAttackRange);
             attackRange.onExit.RemoveListener(OnTargetLeftAttackRange);
+        }
+        
+        CharacterEvents.OnCharacterDied -= OnAnyCharacterDied;
+    }
+    
+    private void OnAnyCharacterDied(GameObject character)
+    {
+        if (character == gameObject) return;
+        
+        var proximityDetectors = character.GetComponentsInChildren<ProximityDetector>();
+        foreach (var detector in proximityDetectors)
+        {
+            RemoveTarget(detector.gameObject);
         }
     }
 

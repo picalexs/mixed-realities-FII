@@ -3,7 +3,6 @@
 public class DeathAnimationController : MonoBehaviour
 {
     private static readonly int IsDead = Animator.StringToHash("IsDead");
-    
     private Animator _animator;
     private Health _health;
 

@@ -1016,13 +1016,14 @@ GameObject:
   - component: {fileID: 400052}
   - component: {fileID: 9500000}
   - component: {fileID: 7849724911516809865}
-  - component: {fileID: 5417234837389314708}
-  - component: {fileID: 2080700082526480123}
-  - component: {fileID: 6359353889564146605}
   - component: {fileID: 311382402653318577}
-  - component: {fileID: 2995306635954485770}
   - component: {fileID: 6176279097020427864}
-  - component: {fileID: 2163861557437213587}
+  - component: {fileID: 2995306635954485770}
+  - component: {fileID: 798932979417723860}
+  - component: {fileID: 6359353889564146605}
+  - component: {fileID: 7087853048030265577}
+  - component: {fileID: 2080700082526480123}
+  - component: {fileID: 5417234837389314708}
   m_Layer: 0
   m_Name: Cactus
   m_TagString: Untagged
@@ -1098,6 +1099,127 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &311382402653318577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918e123ad9b5461fba49b9f0b1d85d6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  rotationSpeed: 5
+  rotateOnlyAroundY: 1
+--- !u!114 &6176279097020427864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c00d7e734d4909afb226af08f9850b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minLookTime: 2
+  maxLookTime: 5
+  rotationSpeed: 2
+  rotateOnlyAroundY: 1
+  lookAngleRange: 180
+--- !u!114 &2995306635954485770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155ee7b804894df48889c89e45a656cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &798932979417723860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26762f222b004507b541c69bb3cbece9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6359353889564146605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a669cccf619043e18bb030d6020f4956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  destroyOnDeath: 0
+  destroyDelay: 0
+  autoRevive: 1
+  reviveDelay: 10
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  onHealed:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onRevived:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7087853048030265577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db1d44e3e1440788fdf97b151eb8c34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentsToDisable:
+  - {fileID: 5417234837389314708}
+  - {fileID: 311382402653318577}
+  - {fileID: 6176279097020427864}
+  - {fileID: 2080700082526480123}
+  - {fileID: 2995306635954485770}
+  disableCollidersOnDeath: 1
+--- !u!114 &2080700082526480123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2623325ed80f47afac9106d7f8bf037f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10
 --- !u!114 &5417234837389314708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1125,108 +1247,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   updateTargetInterval: 0.5
---- !u!114 &2080700082526480123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2623325ed80f47afac9106d7f8bf037f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageAmount: 10
---- !u!114 &6359353889564146605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a669cccf619043e18bb030d6020f4956, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 150
-  currentHealth: 150
-  destroyOnDeath: 0
-  destroyDelay: 0
-  autoRevive: 1
-  reviveDelay: 5
-  onHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onDamaged:
-    m_PersistentCalls:
-      m_Calls: []
-  onHealed:
-    m_PersistentCalls:
-      m_Calls: []
-  onDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  onRevived:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &311382402653318577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 918e123ad9b5461fba49b9f0b1d85d6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  rotationSpeed: 5
-  rotateOnlyAroundY: 1
---- !u!114 &2995306635954485770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 155ee7b804894df48889c89e45a656cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6176279097020427864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c00d7e734d4909afb226af08f9850b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minLookTime: 2
-  maxLookTime: 5
-  rotationSpeed: 2
-  rotateOnlyAroundY: 1
-  lookAngleRange: 180
---- !u!114 &2163861557437213587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26762f222b004507b541c69bb3cbece9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &296466676785955965
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,11 +6,8 @@ public class CombatDamage : MonoBehaviour
     [SerializeField] private float damageAmount = 10f;
     
     private CombatController _combatController;
-    private Health _health;
     private Health _targetHealth;
-    private Transform _currentTarget;
     private bool _isInCombat;
-    private bool _isDead;
 
     private void Awake()
     {
@@ -18,12 +15,6 @@ public class CombatDamage : MonoBehaviour
         if (!_combatController)
         {
             Debug.LogError($"CombatDamage on {name}: CombatController not found!", this);
-        }
-
-        _health = GetComponent<Health>();
-        if (!_health)
-        {
-            Debug.LogError($"CombatDamage on {name}: Health component not found!", this);
         }
     }
 
@@ -34,12 +25,6 @@ public class CombatDamage : MonoBehaviour
         _combatController.onTargetAcquired.AddListener(OnTargetAcquired);
         _combatController.onCombatStarted.AddListener(OnCombatStarted);
         _combatController.onCombatEnded.AddListener(OnCombatEnded);
-        
-        if (_health)
-        {
-            _health.onDeath.AddListener(OnSelfDeath);
-            _health.onRevived.AddListener(OnSelfRevived);
-        }
     }
 
     private void OnDisable()
@@ -49,62 +34,15 @@ public class CombatDamage : MonoBehaviour
         _combatController.onTargetAcquired.RemoveListener(OnTargetAcquired);
         _combatController.onCombatStarted.RemoveListener(OnCombatStarted);
         _combatController.onCombatEnded.RemoveListener(OnCombatEnded);
-        
-        if (_health)
-        {
-            _health.onDeath.RemoveListener(OnSelfDeath);
-            _health.onRevived.RemoveListener(OnSelfRevived);
-        }
-        
-        UnsubscribeFromTargetDeath();
     }
 
     private void OnTargetAcquired(Transform target)
     {
-        UnsubscribeFromTargetDeath();
-        
-        _currentTarget = target;
         _targetHealth = target.GetComponent<Health>();
         if (!_targetHealth)
         {
             Debug.LogWarning($"CombatDamage on {name}: Target {target.name} has no Health component!", this);
-            return;
         }
-        
-        _targetHealth.onDeath.AddListener(OnTargetDeath);
-    }
-
-    private void UnsubscribeFromTargetDeath()
-    {
-        if (!_targetHealth) return;
-        _targetHealth.onDeath.RemoveListener(OnTargetDeath);
-        _targetHealth = null;
-        _currentTarget = null;
-    }
-
-    private void OnTargetDeath()
-    {
-        if (_currentTarget && _combatController)
-        {
-            var proximityDetectors = _currentTarget.GetComponentsInChildren<ProximityDetector>();
-            foreach (var detector in proximityDetectors)
-            {
-                _combatController.RemoveTarget(detector.gameObject);
-            }
-        }
-        
-        UnsubscribeFromTargetDeath();
-    }
-
-    private void OnSelfDeath()
-    {
-        _isDead = true;
-        _isInCombat = false;
-    }
-
-    private void OnSelfRevived()
-    {
-        _isDead = false;
     }
 
     private void OnCombatStarted()
@@ -119,7 +57,7 @@ public class CombatDamage : MonoBehaviour
 
     public void OnAttackHit()
     {
-        if (_isDead || !_isInCombat || !_targetHealth || _targetHealth.IsDead) return;
+        if (!_isInCombat || !_targetHealth || _targetHealth.IsDead) return;
         
         _targetHealth.TakeDamage(damageAmount);
     }
