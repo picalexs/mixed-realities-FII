@@ -14,6 +14,7 @@ public class CombatController : MonoBehaviour
 
     private readonly HashSet<GameObject> _detectedObjects = new HashSet<GameObject>();
     private readonly HashSet<GameObject> _attackableObjects = new HashSet<GameObject>();
+    private readonly Dictionary<GameObject, ProximityDetector[]> _characterDetectorCache = new Dictionary<GameObject, ProximityDetector[]>();
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class CombatController : MonoBehaviour
         }
         
         CharacterEvents.OnCharacterDied += OnAnyCharacterDied;
+        CharacterEvents.OnCharacterRevived += OnAnyCharacterRevived;
     }
 
     private void OnDisable()
@@ -59,17 +61,28 @@ public class CombatController : MonoBehaviour
         }
         
         CharacterEvents.OnCharacterDied -= OnAnyCharacterDied;
+        CharacterEvents.OnCharacterRevived -= OnAnyCharacterRevived;
     }
     
     private void OnAnyCharacterDied(GameObject character)
     {
         if (character == gameObject) return;
         
-        var proximityDetectors = character.GetComponentsInChildren<ProximityDetector>();
+        if (!_characterDetectorCache.TryGetValue(character, out var proximityDetectors))
+        {
+            proximityDetectors = character.GetComponentsInChildren<ProximityDetector>();
+            _characterDetectorCache[character] = proximityDetectors;
+        }
+        
         foreach (var detector in proximityDetectors)
         {
             RemoveTarget(detector.gameObject);
         }
+    }
+    
+    private void OnAnyCharacterRevived(GameObject character)
+    {
+        _characterDetectorCache.Remove(character);
     }
 
     private void OnTargetDetected(GameObject target)

@@ -2,6 +2,7 @@
 
 public class HealthComponentController : MonoBehaviour
 {
+    [Header("Components to Disable on Death")]
     [SerializeField] private MonoBehaviour[] componentsToDisable;
     [SerializeField] private bool disableCollidersOnDeath = true;
     

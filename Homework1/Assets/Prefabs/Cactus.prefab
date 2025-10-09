@@ -1024,6 +1024,7 @@ GameObject:
   - component: {fileID: 7087853048030265577}
   - component: {fileID: 2080700082526480123}
   - component: {fileID: 5417234837389314708}
+  - component: {fileID: 4975134458073940653}
   m_Layer: 0
   m_Name: Cactus
   m_TagString: Untagged
@@ -1247,6 +1248,26 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   updateTargetInterval: 0.5
+--- !u!114 &4975134458073940653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae92b819ec414350b9e0e63fd440ba5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 0}
+  changeColorOnDamage: 1
+  fullHealthColor: {r: 1, g: 1, b: 1, a: 0}
+  lowHealthColor: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 0.47058824}
+  flashOnDamage: 1
+  flashColor: {r: 1, g: 0.47358483, b: 0.47358483, a: 1}
+  flashDuration: 0.1
+  flashBrightness: 2.5
 --- !u!1 &296466676785955965
 GameObject:
   m_ObjectHideFlags: 0
