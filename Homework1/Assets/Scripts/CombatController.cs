@@ -7,10 +7,10 @@ public class CombatController : MonoBehaviour
     [SerializeField] private ProximityDetector detectionRange;
     [SerializeField] private ProximityDetector attackRange;
     
-    [HideInInspector] public UnityEvent<Transform> onTargetAcquired = new UnityEvent<Transform>();
-    [HideInInspector] public UnityEvent onTargetLost = new UnityEvent();
-    [HideInInspector] public UnityEvent onCombatStarted = new UnityEvent();
-    [HideInInspector] public UnityEvent onCombatEnded = new UnityEvent();
+    public UnityEvent<Transform> onTargetAcquired = new UnityEvent<Transform>();
+    public UnityEvent onTargetLost = new UnityEvent();
+    public UnityEvent onCombatStarted = new UnityEvent();
+    public UnityEvent onCombatEnded = new UnityEvent();
 
     private readonly HashSet<GameObject> _detectedObjects = new HashSet<GameObject>();
     private readonly HashSet<GameObject> _attackableObjects = new HashSet<GameObject>();
@@ -83,6 +83,51 @@ public class CombatController : MonoBehaviour
     private void OnAnyCharacterRevived(GameObject character)
     {
         _characterDetectorCache.Remove(character);
+        ValidateTargetDistances();
+    }
+    
+    private void ValidateTargetDistances()
+    {
+        if (!detectionRange || !attackRange) return;
+        
+        var detectionCollider = detectionRange.GetComponent<Collider>();
+        var attackCollider = attackRange.GetComponent<Collider>();
+        if (!detectionCollider || !attackCollider) return;
+        
+        _detectedObjects.RemoveWhere(obj =>
+        {
+            if (!obj) return true;
+            
+            var objCollider = obj.GetComponent<Collider>();
+            if (!objCollider) return true;
+            return !detectionCollider.bounds.Intersects(objCollider.bounds);
+        });
+        
+        var attackTargetsToRemove = new List<GameObject>();
+        foreach (var obj in _attackableObjects)
+        {
+            if (!obj)
+            {
+                attackTargetsToRemove.Add(obj);
+                continue;
+            }
+            
+            var objCollider = obj.GetComponent<Collider>();
+            if (!objCollider || !attackCollider.bounds.Intersects(objCollider.bounds))
+            {
+                attackTargetsToRemove.Add(obj);
+            }
+        }
+        
+        foreach (var obj in attackTargetsToRemove)
+        {
+            RemoveTarget(obj);
+        }
+        
+        if (_detectedObjects.Count == 0)
+        {
+            onTargetLost.Invoke();
+        }
     }
 
     private void OnTargetDetected(GameObject target)
@@ -117,7 +162,7 @@ public class CombatController : MonoBehaviour
         }
     }
 
-    public void RemoveTarget(GameObject target)
+    private void RemoveTarget(GameObject target)
     {
         _detectedObjects.Remove(target);
         var wasInAttack = _attackableObjects.Remove(target);
@@ -137,6 +182,9 @@ public class CombatController : MonoBehaviour
     {
         GameObject closest = null;
         var closestDistance = float.MaxValue;
+        
+        _detectedObjects.RemoveWhere(obj => !obj);
+        
         foreach (var obj in _detectedObjects)
         {
             if (!obj) continue;

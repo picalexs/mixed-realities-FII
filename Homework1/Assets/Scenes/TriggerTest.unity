@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.4
+      value: 87.1
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.7
+      value: -3.2
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -182,7 +182,8 @@ PrefabInstance:
       propertyPath: currentHealth
       value: 150
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 189921837377958353, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -332,6 +333,22 @@ PrefabInstance:
     - target: {fileID: 400052, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975134458073940653, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
+      propertyPath: fullHealthColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975134458073940653, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
+      propertyPath: fullHealthColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975134458073940653, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
+      propertyPath: fullHealthColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975134458073940653, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
+      propertyPath: fullHealthColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6359353889564146605, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
       propertyPath: maxHealth
@@ -537,7 +554,7 @@ Transform:
   m_GameObject: {fileID: 2116429338}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.9944854, z: 0.10487558, w: 0}
-  m_LocalPosition: {x: -29, y: 45.4, z: 91.5}
+  m_LocalPosition: {x: -29, y: 28.6, z: 52.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -557,7 +574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -35.2
+      value: -117.5
       objectReference: {fileID: 0}
     - target: {fileID: 400052, guid: 68d8f3eae01c5744b996aab3358db0a0, type: 3}
       propertyPath: m_LocalPosition.y

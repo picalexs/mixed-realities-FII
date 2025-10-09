@@ -41,9 +41,9 @@ public class HealthComponentController : MonoBehaviour
 
     private void OnDeath()
     {
+        SetCollidersEnabled(false);
         CharacterEvents.BroadcastDeath(gameObject);
         SetComponentsEnabled(false);
-        SetCollidersEnabled(false);
     }
 
     private void OnRevived()
