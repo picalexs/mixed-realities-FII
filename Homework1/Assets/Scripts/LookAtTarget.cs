@@ -6,9 +6,39 @@ public class LookAtTarget : MonoBehaviour
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private bool rotateOnlyAroundY = true;
     
-    public void SetTarget(Transform setTarget)
+    private CombatController _combatController;
+
+    private void Awake()
+    {
+        _combatController = GetComponent<CombatController>();
+        if (!_combatController)
+        {
+            Debug.LogError($"LookAtTarget on {name}: CombatController not found on this GameObject!", this);
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (!_combatController) return;
+        _combatController.onTargetAcquired.AddListener(SetTarget);
+        _combatController.onTargetLost.AddListener(ClearTarget);
+    }
+    
+    private void OnDisable()
+    {
+        if (!_combatController) return;
+        _combatController.onTargetAcquired.RemoveListener(SetTarget);
+        _combatController.onTargetLost.RemoveListener(ClearTarget);
+    }
+
+    private void SetTarget(Transform setTarget)
     {
         target = setTarget;
+    }
+
+    private void ClearTarget()
+    {
+        target = null;
     }
 
     private void Update()
@@ -20,7 +50,7 @@ public class LookAtTarget : MonoBehaviour
     {
         if (!target) return;
 
-        Vector3 directionToTarget = target.position - transform.position;
+        var directionToTarget = target.position - transform.position;
 
         if (rotateOnlyAroundY)
         {
@@ -29,8 +59,7 @@ public class LookAtTarget : MonoBehaviour
 
         if (directionToTarget.sqrMagnitude < 0.01f) return;
 
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+        var targetRotation = Quaternion.LookRotation(directionToTarget);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 }
-

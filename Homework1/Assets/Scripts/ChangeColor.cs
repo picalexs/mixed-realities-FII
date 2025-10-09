@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class ChangeColor : MonoBehaviour
 {
-    private readonly float _interval = 2f;
+    private readonly float _interval = 1f;
     private float _timer;
     private Renderer _renderer;
 
     private void Awake()
     {
-        Debug.Log("ChangeColor Awake");
         _renderer = GetComponent<Renderer>();
     }
 
@@ -20,7 +19,6 @@ public class ChangeColor : MonoBehaviour
 
         if (_renderer)
         {
-            Debug.Log("Changing the color");
             _renderer.material.color = new Color(Random.value, Random.value, Random.value);
         }
     }

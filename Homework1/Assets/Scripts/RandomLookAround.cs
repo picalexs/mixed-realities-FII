@@ -9,15 +9,45 @@ public class RandomLookAround : MonoBehaviour
     [SerializeField] private bool rotateOnlyAroundY = true;
     [SerializeField] private float lookAngleRange = 180f;
     
-    private float _lookTimer = 0f;
+    private CombatController _combatController;
+    
+    private float _lookTimer;
     private Quaternion _targetRotation;
     private bool _isEnabled = true;
-    private LookAtTarget _lookAtTarget;
 
     private void Awake()
     {
-        _lookAtTarget = GetComponent<LookAtTarget>();
+        _combatController = GetComponent<CombatController>();
+        if (!_combatController)
+        {
+            Debug.LogError($"RandomLookAround on {name}: CombatController not found on this GameObject!", this);
+        }
+
         PickNewRandomDirection();
+    }
+
+    private void OnEnable()
+    {
+        if (!_combatController) return;
+        _combatController.onTargetAcquired.AddListener(DisableRandomLooking);
+        _combatController.onTargetLost.AddListener(EnableRandomLooking);
+    }
+    
+    private void OnDisable()
+    {
+        if (!_combatController) return;
+        _combatController.onTargetAcquired.RemoveListener(DisableRandomLooking);
+        _combatController.onTargetLost.RemoveListener(EnableRandomLooking);
+    }
+    
+    private void EnableRandomLooking()
+    {
+        _isEnabled = true;
+    }
+
+    private void DisableRandomLooking(Transform target)
+    {
+        _isEnabled = false;
     }
 
     private void Update()
@@ -25,62 +55,29 @@ public class RandomLookAround : MonoBehaviour
         if (!_isEnabled) return;
 
         _lookTimer -= Time.deltaTime;
-
         if (_lookTimer <= 0f)
         {
             PickNewRandomDirection();
         }
-
         transform.rotation = Quaternion.Slerp(transform.rotation, _targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     private void PickNewRandomDirection()
     {
         _lookTimer = Random.Range(minLookTime, maxLookTime);
-        float randomAngle = Random.Range(-lookAngleRange / 2f, lookAngleRange / 2f);
+        var randomAngle = Random.Range(-lookAngleRange / 2f, lookAngleRange / 2f);
         
         Vector3 randomDirection;
+        var randomPitch = Random.Range(-lookAngleRange / 4f, lookAngleRange / 4f);
         if (rotateOnlyAroundY)
         {
             randomDirection = Quaternion.Euler(0f, randomAngle, 0f) * transform.forward;
         }
         else
         {
-            float randomPitch = Random.Range(-lookAngleRange / 4f, lookAngleRange / 4f);
             randomDirection = Quaternion.Euler(randomPitch, randomAngle, 0f) * transform.forward;
         }
 
         _targetRotation = Quaternion.LookRotation(randomDirection);
-        
-        Debug.Log($"{name}: Looking in new random direction for {_lookTimer:F1} seconds");
-    }
-    
-    public void EnableRandomLooking()
-    {
-        if (_isEnabled) return;
-        
-        _isEnabled = true;
-        
-        if (_lookAtTarget != null)
-        {
-            _lookAtTarget.SetTarget(null);
-        }
-        
-        PickNewRandomDirection();
-        Debug.Log($"{name}: Random looking enabled");
-    }
-    
-    public void DisableRandomLooking()
-    {
-        if (!_isEnabled) return;
-        
-        _isEnabled = false;
-        Debug.Log($"{name}: Random looking disabled");
-    }
-
-    public bool IsEnabled()
-    {
-        return _isEnabled;
     }
 }
-

@@ -1017,8 +1017,11 @@ GameObject:
   - component: {fileID: 9500000}
   - component: {fileID: 7849724911516809865}
   - component: {fileID: 5417234837389314708}
+  - component: {fileID: 2080700082526480123}
+  - component: {fileID: 6359353889564146605}
   - component: {fileID: 311382402653318577}
   - component: {fileID: 2995306635954485770}
+  - component: {fileID: 6176279097020427864}
   m_Layer: 0
   m_Name: Cactus
   m_TagString: Untagged
@@ -1108,7 +1111,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRange: {fileID: 5416666052736188877}
   attackRange: {fileID: 4965044841708022700}
+  onTargetAcquired:
+    m_PersistentCalls:
+      m_Calls: []
+  onTargetLost:
+    m_PersistentCalls:
+      m_Calls: []
+  onCombatStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  onCombatEnded:
+    m_PersistentCalls:
+      m_Calls: []
   updateTargetInterval: 0.5
+--- !u!114 &2080700082526480123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2623325ed80f47afac9106d7f8bf037f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10
+--- !u!114 &6359353889564146605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a669cccf619043e18bb030d6020f4956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  destroyOnDeath: 1
+  destroyDelay: 0
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  onHealed:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onRevived:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &311382402653318577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1136,6 +1195,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 155ee7b804894df48889c89e45a656cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6176279097020427864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c00d7e734d4909afb226af08f9850b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minLookTime: 2
+  maxLookTime: 5
+  rotationSpeed: 2
+  rotateOnlyAroundY: 1
+  lookAngleRange: 180
 --- !u!1 &296466676785955965
 GameObject:
   m_ObjectHideFlags: 0
