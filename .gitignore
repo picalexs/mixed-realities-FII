@@ -1,69 +1,92 @@
-# Unity project ignores (applies to all subfolders)
+# --- Unity Core ---
 **/[Ll]ibrary/
 **/[Tt]emp/
 **/[Oo]bj/
-**/[Bb]uild/
-**/[Bb]uilds/
+**/[Bb]uild*/
 **/[Ll]ogs/
 **/[Uu]ser[Ss]ettings/
-**/*.log
 **/[Mm]emoryCaptures/
 **/[Rr]ecordings/
+**/sysinfo.txt
+**/*.log
+**/mono_crash.*
 
-# Ignore Unity generated artifacts
+# --- Unity auto-generated artifacts ---
 **/*.blend1
 **/*.blend1.meta
-**/sysinfo.txt
-**/mono_crash.*
+**/*.unitypackage
+**/*.unitypackage.meta
 **/*.apk
 **/*.aab
 **/*.app
-**/*.unitypackage
-**/*.unitypackage.meta
+**/*.exe
+**/*.zip
+**/*.tgz
 **/crashlytics-build.properties
-**/InitTestScene*.unity*
 
-# Addressables
-**/ServerData/
-**/[Aa]ssets/StreamingAssets/aa*
+# --- Addressables & StreamingAssets ---
+**/[Aa]ssets/StreamingAssets/aa*/
+**/[Aa]ssets/Addressables_Temp*/
 **/[Aa]ssets/AddressableAssetsData/link.xml*
-**/[Aa]ssets/Addressables_Temp*
-**/[Aa]ssets/AddressableAssetsData/*/*.bin*
+**/[Aa]ssets/AddressableAssetsData/**/*.bin*
+**/[Aa]ssets/ServerData/
 
-# Visual Scripting auto-generated
-**/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
-**/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
-**/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
-**/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+# --- Visual Scripting (Bolt/Graph/Flow) ---
+**/[Aa]ssets/Unity.VisualScripting.Generated/
 **/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-# Rider / JetBrains
-**/[Aa]ssets/Plugins/Editor/JetBrains*
-**/*.DotSettings.user
-**/.idea/
+# --- XR / OpenXR / Input System ---
+# OpenXR caches & auto-generated controller profiles
+**/[Aa]ssets/XR/Settings/OpenXR/Generated/*
+**/[Aa]ssets/XR/Settings/OpenXR/Generated.meta
+**/[Aa]ssets/XR/XRDeviceSimulator/DeviceLayouts/*
+**/[Aa]ssets/XR/XRDeviceSimulator/DeviceLayouts.meta
+**/[Aa]ssets/XR/Interaction/**/*.inputactions*
+**/[Aa]ssets/XR/Interaction/**/*.actions
+# Input System .inputsettings backups
+**/[Aa]ssets/InputSystem/*.inputsettings*
+# SteamVR or Oculus temp data
+**/[Aa]ssets/SteamVR_*/resources_temp*/
+**/[Aa]ssets/Oculus/VR/Temp*/
 
-# Visual Studio
+# --- IDE / tooling ---
+**/.idea/
 **/.vs/
-**/.gradle/
-**/ExportedObj/
 **/.consulo/
-**/*.csproj
-**/*.unityproj
-**/*.sln
-**/*.suo
-**/*.tmp
-**/*.user
-**/*.userprefs
+**/.gradle/
+**/*.DotSettings.user
 **/*.pidb
-**/*.booproj
-**/*.svd
 **/*.pdb
 **/*.mdb
+**/*.svd
 **/*.opendb
 **/*.VC.db
+**/*.csproj
+**/*.sln
+**/*.user
+**/*.userprefs
+**/*.booproj
+**/*.tmp
+**/*.unityproj
+
+# --- JetBrains Rider Plugin ---
+**/[Aa]ssets/Plugins/Editor/JetBrains*
+
+# --- Misc editor exports ---
+**/ExportedObj/
 **/*.pidb.meta
 **/*.pdb.meta
 **/*.mdb.meta
 
-# Ignore Unity package archives
+# --- Package archives ---
 **/[Pp]ackages/*.tgz
+
+# --- OS / Misc ---
+**/.DS_Store
+**/Thumbs.db
+**/desktop.ini
+
+# --- Logs & profiler captures ---
+**/*.perf.data
+**/*.prof
+**/Profiler*
