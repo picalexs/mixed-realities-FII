@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ball
   - New tag
+  - BasketballZone
+  - MiniGolfZone
   layers:
   - Default
   - TransparentFX

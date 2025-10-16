@@ -9,18 +9,16 @@ public class ScoreManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-
-        Debug.Log("✅ ScoreManager s-a inițializat corect (Awake)");
     }
 
     void Start()
     {
-        Debug.Log("✅ ScoreManager este activ (Start)");
+        Debug.Log("ScoreManager active");
     }
 
     public void AddScore(int points)
     {
         totalScore += points;
-        Debug.Log($"🎯 AddScore() apelat — scor total acum = {totalScore}");
+        Debug.Log($"AddScore() called — total score now = {totalScore}");
     }
 }
