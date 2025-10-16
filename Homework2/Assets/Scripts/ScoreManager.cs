@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
+    public Text scoreText; 
     private int totalScore = 0;
 
     void Awake()
@@ -13,12 +15,13 @@ public class ScoreManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("ScoreManager active");
+        if (scoreText) scoreText.text = "Score: 0";
     }
 
     public void AddScore(int points)
     {
         totalScore += points;
-        Debug.Log($"AddScore() called — total score now = {totalScore}");
+        if (scoreText) scoreText.text = "Score: " + totalScore;
+        Debug.Log($"Scor total acum: {totalScore}");
     }
 }
