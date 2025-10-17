@@ -1,27 +1,41 @@
 using UnityEngine;
-using UnityEngine.UI; 
+using System;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static ScoreManager Instance;
-    public Text scoreText; 
-    private int totalScore = 0;
+    public static ScoreManager instance { get; private set; }
+    
+    private int _totalScore = 0;
+    public static event Action<int> onScoreChanged;
 
-    void Awake()
+    private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-    }
-
-    void Start()
-    {
-        if (scoreText) scoreText.text = "Score: 0";
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void AddScore(int points)
     {
-        totalScore += points;
-        if (scoreText) scoreText.text = "Score: " + totalScore;
-        Debug.Log($"Scor total acum: {totalScore}");
+        _totalScore += points;
+        onScoreChanged?.Invoke(_totalScore);
+        Debug.Log($"Total score now: {_totalScore}");
+    }
+
+    public void ResetScore()
+    {
+        _totalScore = 0;
+        onScoreChanged?.Invoke(_totalScore);
+    }
+
+    public int GetCurrentScore()
+    {
+        return _totalScore;
     }
 }

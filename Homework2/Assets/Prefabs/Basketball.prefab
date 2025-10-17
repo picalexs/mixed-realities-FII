@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8651326653954380749}
   - component: {fileID: 3394381302843749453}
   - component: {fileID: 706629377525516003}
+  - component: {fileID: 7608231989073364688}
   m_Layer: 0
   m_Name: Basketball
   m_TagString: Ball
@@ -286,3 +287,16 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &7608231989073364688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4311300159116787579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a8793c2c97ada4eb6231298174c8f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lastReleasePosition: {x: 0, y: 0, z: 0}

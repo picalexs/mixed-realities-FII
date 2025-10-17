@@ -1,32 +1,22 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class BasketScoreTrigger : MonoBehaviour
 {
-    public int basePoints = 2;             // puncte de bază
-    public Transform hoopCenter;           // centrul coșului (Empty pe inel)
-    public float distanceMultiplier = 0.5f; // cât bonus primești pe metru
-
-    void OnTriggerEnter(Collider other)
+    public int points = 2;
+    
+    private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Ball")) return;
 
-        var tracker = other.GetComponent<ThrowTracker>();
-        if (tracker == null)
+        var grab = other.GetComponent<XRGrabInteractable>();
+        if (grab != null && grab.isSelected)
         {
-            Debug.Log("Mingea nu are ThrowTracker.");
+            Debug.Log("Ball is held — not counting score.");
             return;
         }
 
-        if (tracker.IsHeld())
-        {
-            Debug.Log("Mingea e ținută – nu contăm coșul.");
-            return;
-        }
-
-        float distance = Vector3.Distance(tracker.lastReleasePos, hoopCenter.position);
-        int score = basePoints + Mathf.RoundToInt(distance * distanceMultiplier);
-
-        Debug.Log($"Coș valid! +{score} puncte (distanță: {distance:F2} m)");
-        ScoreManager.Instance?.AddScore(score);
+        Debug.Log($"Valid basket! +{points} points");
+        ScoreManager.instance?.AddScore(points);
     }
 }

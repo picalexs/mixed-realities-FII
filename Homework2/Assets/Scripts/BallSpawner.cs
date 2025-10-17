@@ -2,33 +2,29 @@ using UnityEngine;
 
 public class BallSpawner : MonoBehaviour
 {
-    [Header("Ball Prefabs")]
-    public GameObject basketballPrefab;
-    public GameObject miniGolfBallPrefab;
+    [Header("Ball Prefabs")] public GameObject prefab;
 
     [Header("Spawn Settings")]
-    [SerializeField] private Transform playerOrigin;
-    [SerializeField] private Vector3 offsetSpawnPoint = new Vector3(0, 0.5f, 1.0f);
+    [SerializeField] private Transform spawnPointOne;
+    [SerializeField] private Transform spawnPointTwo;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SpawnBall(basketballPrefab);
+            SpawnBall(prefab, spawnPointOne.position);
+            Debug.Log("Spawned Ball on position 1");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            SpawnBall(miniGolfBallPrefab);
+            SpawnBall(prefab, spawnPointTwo.position);
+            Debug.Log("Spawned Ball on position 2");
         }
     }
 
-    private void SpawnBall(GameObject ballPrefab)
+    private void SpawnBall(GameObject ballPrefab, Vector3 position)
     {
         if (!ballPrefab) return;
-
-        Transform origin = playerOrigin ? playerOrigin : transform;
-        Vector3 spawnPos = origin.position + origin.TransformDirection(offsetSpawnPoint);
-
-        Instantiate(ballPrefab, spawnPos, Quaternion.identity);
+        Instantiate(ballPrefab, position, Quaternion.identity);
     }
 }
