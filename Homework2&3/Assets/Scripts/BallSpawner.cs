@@ -10,12 +10,12 @@ public class BallSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
         {
             SpawnBall(prefab, spawnPointOne.position);
             Debug.Log("Spawned Ball on position 1");
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
         {
             SpawnBall(prefab, spawnPointTwo.position);
             Debug.Log("Spawned Ball on position 2");
